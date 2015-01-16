@@ -1,4 +1,4 @@
-function [ opened, somacount ] = soma_detect( orig_img )
+function [ opened ] = soma_detect( orig_img )
 %UNTITLED3 Summary of this function goes here
 %   %% soma detection for biomath bootcamp project
 % code adapted from SynD
@@ -52,14 +52,7 @@ opened = imopen(orig_img,se); % open the original image
 figure
 subplot(1,2,1)
 imshow(opened,[]);
-
 closed = imclose(orig_img, se); % close the image-- fills in gaps between disks
-subplot(1,2,2)
-imshow(closed,[]);
-
-% count the # of soma blobs
-somacount = 24;
-
-
+subplot(1,
 end
 

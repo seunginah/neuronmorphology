@@ -1,8 +1,9 @@
 %% load image and run program
 % biomath bootcamp project
-% by Grace Yoo and Minxuan (Michelle) Cao
+% 
 %
-% code adapted from:
+% code adapted from SynD
+%
 % Johannes Hjorth
 % johannes.hjorth@cncr.vu.nl
 % hjorth@kth.se
@@ -27,32 +28,27 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% load image  
+  
+% read the sample image
 % using original 1024 x 1024 px image WILL cause system to CRASH
 I = imread('images/practice_neuron.jpg');
 save I
 load I
+%imshow(I)
 
 % convert to binary, with threshold
 threshold = 0.1;
 BW = im2bw(I, threshold);
+% 
+% figure
+% subplot(1,2,1)
+% imshow(I)
+% subplot(1,2,2)
+% imshow(BW) % display figures
 
-% display
-figure
-subplot(1,2,1)
-imshow(I)
-subplot(1,2,2)
-imshow(BW) % display figures
-
-%%  METRIC 1: NUMBER OF SOMA
-% detect soma
-[soma, somacount] = soma_detect(BW);
+soma = soma_detect(BW);
 total = cumsum(soma);
 
-for i = 1:size(total,1)
-    for j = 1:size(total,2)
-        if soma(i,j) > 0
-            fprintf('soma(%f, %d) = %g\n',i,j,soma(i,j))
-        end
-    end
-end
+for i = 1:size(soma,1)
+    for j = 1:size(soma,2)
+        
