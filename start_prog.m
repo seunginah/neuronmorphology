@@ -32,7 +32,7 @@
 
 % read the sample image
 % using original 1024 x 1024 px image WILL cause system to CRASH
-I = imread('images/1.jpg');
+I = imread('images/practice_neuron.jpg');
 save I
 load I
 %imshow(I)
