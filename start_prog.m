@@ -44,6 +44,9 @@ imshow(I)
 subplot(1,2,2)
 imshow(BW) % display figures
 
+%% test steer
+[J1, J2] = steer(BW);
+
 %%  METRIC 1: NUMBER OF SOMA
 % detect soma
 [soma, somacount] = soma_detect(BW);
