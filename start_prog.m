@@ -29,12 +29,12 @@
 
 %% load image  
 % using original 1024 x 1024 px image WILL cause system to CRASH
-I = imread('images/practice_neuron.jpg');
+I = imread('images/3_neurons.jpg');
 save I
 load I
 
 % convert to binary, with threshold
-threshold = 0.1;
+threshold = 0.5;
 BW = im2bw(I, threshold);
 
 % display
@@ -47,12 +47,12 @@ imshow(BW) % display figures
 %%  METRIC 1: NUMBER OF SOMA
 % detect soma
 [soma, somacount] = soma_detect(BW);
-total = cumsum(soma);
-
-for i = 1:size(total,1)
-    for j = 1:size(total,2)
-        if soma(i,j) > 0
-            fprintf('soma(%f, %d) = %g\n',i,j,soma(i,j))
-        end
-    end
-end
+% total = cumsum(soma);
+% 
+% for i = 1:size(total,1)
+%     for j = 1:size(total,2)
+%         if soma(i,j) > 0
+%             %fprintf('soma(%f, %d) = %g\n',i,j,soma(i,j))
+%         end
+%     end
+% end

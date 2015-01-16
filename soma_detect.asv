@@ -1,4 +1,4 @@
-function [ opened ] = soma_detect( orig_img )
+function [ opened, somacount ] = soma_detect( orig_img )
 %UNTITLED3 Summary of this function goes here
 %   %% soma detection for biomath bootcamp project
 % code adapted from SynD
@@ -48,11 +48,53 @@ function [ opened ] = soma_detect( orig_img )
 
 disk_r = 10; % PIXELS, radius of disk used for morph opening
 se = strel('disk', disk_r); % generate structuring element of "disk" shape, specify disk radius
-opened = imopen(orig_img,se); % open the original image
+opened = imopen(orig_img,se); % morphologically open the original image
 figure
 subplot(1,2,1)
 imshow(opened,[]);
+title('morphologically opened')
+
 closed = imclose(orig_img, se); % close the image-- fills in gaps between disks
-subplot(1,
+subplot(1,2,2)
+imshow(closed,[]);
+title('morphologically closed')
+
+% count the # of soma blobs
+blob = vision.BlobAnalysis; % new blob analysis system object
+blob.AreaOutputPort = false;
+blob.BoundingBoxOutputPort = false;
+centroid = step(blob, opened) % returns X,Y coordinates of the centroid
+
+tol = 0; % tolerance
+blobcount = zeros(size(opened));
+% find all the blobs with size greater than the tolerance
+blobcount(find(opened>tol)) = 1; 
+% assign a number to each contiguous object 
+labeled = bwlabel(blobcount, 4);
+% get statistics on blobs
+stats = regionprops(labeled, 'Area', 'Centroid');
+somacount = length(stats)
+
+% for n = 1:somacount
+%     fprintf('\n')
+%     fprintf('blob # %f\n', n)
+%     fprintf('Area = %g, Centroid = %d\n', stats(n).Area, stats(n).Centroid)
+% end
+
+neurons = [1, somacount];
+
+for n = 1:somacount
+    soma_area = stats(n).Area;
+    centroid = stats(n).Centroid;
+    neurites = [1 1];
+    fprintf('\n')
+    fprintf('Blob number = %d, Area = %g, Centroid = (%g, %g)',...
+               n, soma_area, centroid);
+    % make a neuron data structure
+    neurons() = neuron_data(n, soma_area, centroid, neurites);
+end
+
+neurons
+
 end
 

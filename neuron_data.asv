@@ -1,0 +1,11 @@
+function [ data_structure ] = neuron_data( neuron_ID, soma_size, neurite_count)
+%this function creates a data structure which holds all the information
+%needed to describe 1 neuron
+%   utilizes matlab data structures to save info for each neuron
+
+
+
+data_structure = struct();
+
+end
+
